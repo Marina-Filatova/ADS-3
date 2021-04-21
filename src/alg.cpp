@@ -36,7 +36,8 @@ while (ch) {
 int prioritet;
 prioritet = priority(ch);
 if (prioritet > -1) {
-if ((prioritet == 0) || (prioritet > priority(top) || StackChar.isEmpty()) && ch != ')') {
+if ((prioritet == 0) || (prioritet > priority(top)
+|| StackChar.isEmpty()) && ch != ')') {
 if (StackChar.isEmpty()) {
 top = ch;
 }
