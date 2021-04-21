@@ -41,8 +41,7 @@ if (StackChar.isEmpty()) {
 top = ch;
 }
 StackChar.push(ch);
-}
-else if (ch == ')') {
+} else if (ch == ')') {
 while (StackChar.get() != '(') {
 pstfx.push_back(StackChar.get());
 pstfx.push_back(' ');
@@ -52,8 +51,7 @@ StackChar.pop();
 if (StackChar.isEmpty()) {
 top = 0;
 }
-}
-else {
+} else {
 while ((StackChar.isEmpty() != 0) && (priority(StackChar.get()) >= prioritet)) {
 pstfx.push_back(StackChar.get());
 pstfx.push_back(' ');
@@ -64,8 +62,7 @@ top = ch;
 }
 StackChar.push(ch);
 }
-}
-else {
+} else {
 pstfx.push_back(ch);
 pstfx.push_back(' ');
 }
@@ -93,8 +90,7 @@ chislo = chislo + (ch - 48) * dec;
 dec = dec * 10;
 }
 stack.push(chislo);
-}
-else {
+} else {
 char operate = ch;
 i++;
 int number2 = stack.get();
@@ -106,9 +102,9 @@ stack.push(result);
 }
 if (i < pst.size()) {
 ch = pst[++i];
-}
-else
+} else {
 ch = 0;
+}
 }
 result = stack.get();
 stack.pop();
