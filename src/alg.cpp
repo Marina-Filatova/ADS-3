@@ -32,37 +32,35 @@ std::string pst;
 int i = 0;
 char ch = inf[i];
 char top = 0;
-TStack <char> Stack;
+TStack <char> stack;
 while (ch) {
-int prioritet;
-prioritet = priority(ch);
-if (prioritet > -1) {
-if ((prioritet == 0) || (prioritet > priority(top) ||
-Stack.isEmpty()) && ch != ')') {
-if (Stack.isEmpty()) {
+int prior;
+prior = priority(ch);
+if (prior > -1) {
+if ((prior == 0 || prior > priority(top) ||
+stack.isEmpty()) && ch != ')') {
+if (stack.isEmpty())
 top = ch;
-}
-Stack.push(ch);
+stack.push(ch);
 } else if (ch == ')') {
-while (Stack.get() != '(') {
-pst.push_back(Stack.get());
+while (stack.get() != '(') {
+pst.push_back(stack.get());
 pst.push_back(' ');
-Stack.pop();
+stack.pop();
 }
-Stack.pop();
-if (Stack.isEmpty()) {
+stack.pop();
+if (stack.isEmpty())
 top = 0;
-}
 } else {
-while (!Stack.isEmpty() && priority(Stack.get()) >= prioritet) {
-pst.push_back(Stack.get());
+while (!stack.isEmpty() &&
+priority(stack.get()) >= prior) {
+pst.push_back(stack.get());
 pst.push_back(' ');
-Stack.pop();
+stack.pop();
 }
-if (Stack.isEmpty()) {
+if (stack.isEmpty())
 top = ch;
-}
-Stack.push(ch);
+pst.push(ch);
 }
 } else {
 pst.push_back(ch);
@@ -70,10 +68,10 @@ pst.push_back(' ');
 }
 ch = inf[++i];
 }
-while (!Stack.isEmpty()) {
-pst.push_back(Stack.get());
+while (!stack.isEmpty()) {
+pst.push_back(stack.get());
 pst.push_back(' ');
-Stack.pop();
+stack.pop();
 }
 pst.erase(pst.end() - 1, pst.end());
 return pst;
