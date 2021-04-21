@@ -10,72 +10,73 @@ case '+':return 2;
 case '-':return 2;
 case '*':return 3;
 case '/':return 3;
+default: return -1;
 }
 }
 
 int vichisl(char operate, int num1, int num2) {
 switch (operate) {
-case ('+'): return num1 + num2;
+case '+': return num1 + num2;
 break;
-case('-'): return num1 - num2;
+case '-': return num1 - num2;
 break;
-case('*'): return num1 * num2;
+case '*': return num1 * num2;
 break;
-case('/'): return num1 / num2;
+case '/': return num1 / num2;
 break;
 }
 }
 
 std::string infx2pstfx(std::string inf) {
-std::string pstfx;
+std::string pst;
 int i = 0;
 char ch = inf[i];
 char top = 0;
-TStack <char> StackChar;
+TStack <char> Stack;
 while (ch) {
 int prioritet;
 prioritet = priority(ch);
 if (prioritet > -1) {
-if ((prioritet == 0) || (prioritet > priority(top)
-|| StackChar.isEmpty()) && ch != ')') {
-if (StackChar.isEmpty()) {
+if ((prioritet == 0) || (prioritet > priority(top) ||
+Stack.isEmpty()) && ch != ')') {
+if (Stack.isEmpty()) {
 top = ch;
 }
-StackChar.push(ch);
+Stack.push(ch);
 } else if (ch == ')') {
-while (StackChar.get() != '(') {
-pstfx.push_back(StackChar.get());
-pstfx.push_back(' ');
-StackChar.pop();
+while (Stack.get() != '(') {
+pst.push_back(Stack.get());
+pst.push_back(' ');
+Stack.pop();
 }
-StackChar.pop();
-if (StackChar.isEmpty()) {
+Stack.pop();
+if (Stack.isEmpty()) {
 top = 0;
 }
 } else {
-while ((StackChar.isEmpty() != 0) && (priority(StackChar.get()) >= prioritet)) {
-pstfx.push_back(StackChar.get());
-pstfx.push_back(' ');
-StackChar.pop();
+while (!Stack.isEmpty() && priority(Stack.get()) >= prioritet) {
+pst.push_back(Stack.get());
+pst.push_back(' ');
+Stack.pop();
 }
-if (StackChar.isEmpty()) {
+if (Stack.isEmpty()) {
 top = ch;
 }
-StackChar.push(ch);
+Stack.push(ch);
 }
 } else {
-pstfx.push_back(ch);
-pstfx.push_back(' ');
+pst.push_back(ch);
+pst.push_back(' ');
 }
 ch = inf[++i];
 }
-while (!StackChar.isEmpty()) {
-pstfx.push_back(StackChar.get());
-pstfx.push_back(' ');
-StackChar.pop();
+while (!Stack.isEmpty()) {
+pst.push_back(Stack.get());
+pst.push_back(' ');
+Stack.pop();
 }
-pstfx.erase(pstfx.end() - 1, pstfx.end());
-return pstfx;
+pst.erase(pst.end() - 1, pst.end());
+return pst;
 }
 
 int eval(std::string pst) {
