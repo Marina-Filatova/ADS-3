@@ -28,53 +28,53 @@ break;
 }
 
 std::string infx2pstfx(std::string inf) {
-    std::string pstfx;
-    int i = 0;
-    char x = inf[i];
-    char tem = 0;
-    TStack <char> stackChar;
-    while (x) {
-        int pr;
-        pr = priority(x);
-        if (pr > -1) {
-            if ((pr == 0 || pr > priority(tem) ||
-                stackChar.isEmpty()) && x != ')') {
-                if (stackChar.isEmpty())
-                    tem = x;
-                stackChar.push(x);
-            } else if (x == ')') {
-                while (stackChar.get() != '(') {
-                    pstfx.push_back(stackChar.get());
-                    pstfx.push_back(' ');
-                    stackChar.pop();
-                }
-                stackChar.pop();
-                if (stackChar.isEmpty())
-                    tem = 0;
-            } else {
-                while (!stackChar.isEmpty() &&
-                       priority(stackChar.get()) >= pr) {
-                    pstfx.push_back(stackChar.get());
-                    pstfx.push_back(' ');
-                    stackChar.pop();
-                }
-                if (stackChar.isEmpty())
-                    tem = x;
-                stackChar.push(x);
-            }
-        } else {
-            pstfx.push_back(x);
-            pstfx.push_back(' ');
-        }
-        x = inf[++i];
-    }
-    while (!stackChar.isEmpty()) {
-        pstfx.push_back(stackChar.get());
-        pstfx.push_back(' ');
-        stackChar.pop();
-    }
-    pstfx.erase(pstfx.end() - 1, pstfx.end());
-    return pstfx;
+std::string pstfx;
+int i = 0;
+char x = inf[i];
+char tem = 0;
+TStack <char> stackChar;
+while (x) {
+int pr;
+pr = priority(x);
+if (pr > -1) {
+if ((pr == 0 || pr > priority(tem) ||
+stackChar.isEmpty()) && x != ')') {
+if (stackChar.isEmpty())
+tem = x;
+stackChar.push(x);
+} else if (x == ')') {
+while (stackChar.get() != '(') {
+pstfx.push_back(stackChar.get());
+pstfx.push_back(' ');
+stackChar.pop();
+}
+stackChar.pop();
+if (stackChar.isEmpty())
+tem = 0;
+} else {
+while (!stackChar.isEmpty() &&
+priority(stackChar.get()) >= pr) {
+pstfx.push_back(stackChar.get());
+pstfx.push_back(' ');
+stackChar.pop();
+}
+if (stackChar.isEmpty())
+tem = x;
+stackChar.push(x);
+}
+} else {
+pstfx.push_back(x);
+pstfx.push_back(' ');
+}
+x = inf[++i];
+}
+while (!stackChar.isEmpty()) {
+pstfx.push_back(stackChar.get());
+pstfx.push_back(' ');
+stackChar.pop();
+}
+pstfx.erase(pstfx.end() - 1, pstfx.end());
+return pstfx;
 }
 
 int eval(std::string pst) {
