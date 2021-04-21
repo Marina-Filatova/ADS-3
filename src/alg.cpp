@@ -29,7 +29,7 @@ break;
 std::string infx2pstfx(std::string inf) {
 std::string pstfx;
 int i = 0;
-char ch = inf[0];
+char ch = inf[i];
 char top = 0;
 TStack <char> StackChar;
 while (ch) {
