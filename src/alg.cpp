@@ -28,53 +28,51 @@ break;
 }
 
 std::string infx2pstfx(std::string inf) {
-std::string pstfx;
+std::string out;
 int i = 0;
-char x = inf[i];
-char tem = 0;
+char top = 0;
 TStack <char> stackChar;
-while (x) {
-int pr;
-pr = priority(x);
-if (pr > -1) {
-if ((pr == 0 || pr > priority(tem) ||
-stackChar.isEmpty()) && x != ')') {
-if (stackChar.isEmpty())
-tem = x;
-stackChar.push(x);
-} else if (x == ')') {
+for (i = 0; i < inf.length();i++) {
+int prior;
+prior = priority(inf[i]);
+if (prior > -1) {
+if ((prior == 0 || prior > priority(top) ||
+stackChar.isEmpty()) && inf[i] != ')') {
+if (!stackChar.isEmpty())
+top = inf[i];
+stackChar.push(inf[i]);
+} else if (inf[i] == ')') {
 while (stackChar.get() != '(') {
-pstfx.push_back(stackChar.get());
-pstfx.push_back(' ');
+out.push_back(stackChar.get());
+out.push_back(' ');
 stackChar.pop();
 }
 stackChar.pop();
 if (stackChar.isEmpty())
-tem = 0;
+top = 0;
 } else {
-while (!stackChar.isEmpty() &&
-priority(stackChar.get()) >= pr) {
-pstfx.push_back(stackChar.get());
-pstfx.push_back(' ');
+while (!stackChar.isEmpty() && (
+priority(stackChar.get()) >= prior)) {
+out.push_back(stackChar.get());
+out.push_back(' ');
 stackChar.pop();
 }
 if (stackChar.isEmpty())
-tem = x;
-stackChar.push(x);
+top = inf[i];
+stackChar.push(inf[i]);
 }
 } else {
-pstfx.push_back(x);
-pstfx.push_back(' ');
+out.push_back(inf[i]);
+out.push_back(' ');
 }
-x = inf[++i];
 }
 while (!stackChar.isEmpty()) {
-pstfx.push_back(stackChar.get());
-pstfx.push_back(' ');
+out.push_back(stackChar.get());
+out.push_back(' ');
 stackChar.pop();
 }
-pstfx.erase(pstfx.end() - 1, pstfx.end());
-return pstfx;
+out.erase(out.length() -1, 1);
+return out;
 }
 
 int eval(std::string pst) {
