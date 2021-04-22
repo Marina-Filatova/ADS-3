@@ -15,51 +15,51 @@ default: return -1;
 }
 
 std::string infx2pstfx(std::string inf) {
-std::string out;
-int i = 0;
-char top = 0;
-TStack <char> stackChar;
-for (i ; i < inf.length() ; i++) {
-int prior;
-prior = priority(inf[i]);
-if (prior > -1) {
-if ((prior == 0 || prior > priority(top) ||
-stackChar.isEmpty()) && inf[i] != ')') {
-if (stackChar.isEmpty())
-top = inf[i];
-stackChar.push(inf[i]);
-} else if (inf[i] == ')') {
-while (stackChar.get() != '(') {
-out.push_back(stackChar.get());
-out.push_back(' ');
-stackChar.pop();
-}
-stackChar.pop();
-if (stackChar.isEmpty())
-top = 0;
-} else {
-while (!stackChar.isEmpty() &&
-priority(stackChar.get()) >= prior) {
-out.push_back(stackChar.get());
-out.push_back(' ');
-stackChar.pop();
-}
-if (stackChar.isEmpty())
-top = inf[i];
-stackChar.push(inf[i]);
-}
-} else {
-out.push_back(inf[i]);
-out.push_back(' ');
-}
-}
-while (!stackChar.isEmpty()) {
-out.push_back(stackChar.get());
-out.push_back(' ');
-stackChar.pop();
-}
-out.erase(out.end() - 1, out.end());
-return out;
+    int i = 0;
+    char top = 0;
+    TStack <char> stackChar;
+    std::string out;
+    for (i ; i < inf.length() ; i++) {
+        int prior;
+        prior = priority(inf[i]);
+        if (prior > -1) {
+            if ((prior == 0 || prior > priority(top) ||
+                 stackChar.isEmpty()) && inf[i] != ')') {
+                if (stackChar.isEmpty())
+                    top = inf[i];
+                stackChar.push(inf[i]);
+            } else if (inf[i] == ')') {
+                while (stackChar.get() != '(') {
+                    out.push_back(stackChar.get());
+                    out.push_back(' ');
+                    stackChar.pop();
+                }
+                stackChar.pop();
+                if (stackChar.isEmpty())
+                    top = 0;
+            } else {
+                while (!stackChar.isEmpty() &&
+                       priority(stackChar.get()) >= prior) {
+                    out.push_back(stackChar.get());
+                    out.push_back(' ');
+                    stackChar.pop();
+                }
+                if (stackChar.isEmpty())
+                    top = inf[i];
+                stackChar.push(inf[i]);
+            }
+        } else {
+            out.push_back(inf[i]);
+            out.push_back(' ');
+        }
+    }
+    while (!stackChar.isEmpty()) {
+        out.push_back(stackChar.get());
+        out.push_back(' ');
+        stackChar.pop();
+    }
+    out.erase(out.end() - 1, out.end());
+    return out;
 }
 int vichisl(char operate, int number1, int number2) {
 switch (operate) {
